@@ -5,11 +5,64 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+var articleone={
+    title:'article one | Krishna',
+    heading:'article one',
+    date:'sep 10, 2017',
+    content:`<p>
+                This is my content for article one.     This is my content for article one.     This is my content for article one.
+                    This is my content for article one.    This is my content for article one.    This is my content for article one.
+            </p>
+             <p>
+                This is my content for article one.     This is my content for article one.     This is my content for article one.
+                    This is my content for article one.    This is my content for article one.    This is my content for article one.
+            </p>
+             <p>
+                This is my content for article one.     This is my content for article one.     This is my content for article one.
+                    This is my content for article one.    This is my content for article one.    This is my content for article one.
+            </p>`
+   };
+
+function createTemplate(data){
+    var title=data.title;
+    var date=data.date;
+    var heading=data.heading;
+    var content=data.content;
+var htmlTemplate = `<html>
+    <head>
+        <title>
+            ${title}
+        </title>
+       <link href="/ui/style.css" rel="stylesheet" />
+    </head>
+  
+    <body>
+        <div class="container">
+        <div>
+            <a href="/">Home</a>
+        </div>
+        <hr>
+        <h3>
+            ${heading}
+        </h3>
+        <div>
+            ${date}
+        </div>
+        <div>
+           ${content}
+        </div>
+    </body>
+</html>
+`;
+    return htmlTemplate;
+}
+
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 app.get('/article-one.html', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
+  res.send(createTemplate(articleone));
 });
 
 app.get('/ui/style.css', function (req, res) {
@@ -19,6 +72,7 @@ app.get('/ui/style.css', function (req, res) {
 app.get('/ui/madi.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'madi.png'));
 });
+
 
 
 // Do not change port, otherwise your app won't run on IMAD servers
